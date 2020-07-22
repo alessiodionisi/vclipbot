@@ -1,4 +1,5 @@
 use scraper::{Html, Selector};
+use std::env;
 use telegram_bot::{
     Api, CanAnswerInlineQuery, CanSendMessage, InlineQueryResult, InlineQueryResultMpeg4Gif,
     MessageChat, ParseMode, Update, UpdateKind,
@@ -7,7 +8,7 @@ use tokio::stream::StreamExt;
 
 #[tokio::main]
 async fn main() {
-    let api = Api::new("1311142857:AAHh2DirzAxJbaZNlp1sb4ji8n0VgQbmRbI");
+    let api = Api::new(env::var("TELEGRAM_API_KEY").unwrap());
     let mut stream = api.stream();
 
     while let Some(update) = stream.next().await {
@@ -84,7 +85,7 @@ async fn main() {
                         mpeg4_width: None,
                         mpeg4_height: None,
                         mpeg4_duration: None,
-                        thumb_url: format!("https://y.yarn.co/{}_100_h_6.gif", clip_id),
+                        thumb_url: format!("https://y.yarn.co/{}_text_hi.gif", clip_id),
                         title: Some(title_and_caption.to_string()),
                         caption: Some(title_and_caption.to_string()),
                         parse_mode: Some(ParseMode::Markdown),
