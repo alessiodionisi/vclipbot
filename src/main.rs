@@ -81,11 +81,11 @@ async fn main() {
 
                     let query_result = InlineQueryResultMpeg4Gif {
                         id: clip_id.to_string(),
-                        mpeg4_url: format!("https://y.yarn.co/{}.mp4", clip_id),
+                        mpeg4_url: format!("https://y.yarn.co/{}_text.mp4", clip_id),
                         mpeg4_width: None,
                         mpeg4_height: None,
                         mpeg4_duration: None,
-                        thumb_url: format!("https://y.yarn.co/{}_text_hi.gif", clip_id),
+                        thumb_url: format!("https://y.yarn.co/{}_text.gif", clip_id),
                         title: Some(title_and_caption.to_string()),
                         caption: Some(title_and_caption.to_string()),
                         parse_mode: Some(ParseMode::Markdown),
