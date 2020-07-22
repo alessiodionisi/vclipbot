@@ -1,0 +1,11 @@
+[package]
+name = "vclipbot"
+version = "0.1.0"
+authors = ["Alessio Dionisi <hello@adns.io>"]
+edition = "2018"
+
+[dependencies]
+tokio = { version = "0.2", features = ["full"] }
+telegram-bot = "0.7"
+reqwest = { version = "0.10", features = [] }
+scraper = "0.12"
