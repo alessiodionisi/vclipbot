@@ -77,7 +77,7 @@ async fn main() {
                     let clip_id = first_link_href.replace("/yarn-clip/", "");
                     let clip_text = second_link.text().collect::<String>();
 
-                    let title_and_caption = format!("{}\n{}", clip_text, clip_title);
+                    let title_and_caption = format!("{} - {}", clip_text.trim(), clip_title.trim());
 
                     let query_result = InlineQueryResultMpeg4Gif {
                         id: clip_id.to_string(),
