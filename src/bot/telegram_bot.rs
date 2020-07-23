@@ -1,9 +1,9 @@
 use async_trait::async_trait;
+use futures::StreamExt;
+use log::error;
 use std::error::Error;
 use std::sync::Arc;
 use telegram_bot::{InlineQuery, Update, UpdatesStream};
-use futures::StreamExt;
-use log::{error};
 
 #[async_trait]
 pub trait TelegramBot: Send {
@@ -13,16 +13,18 @@ pub trait TelegramBot: Send {
 }
 
 pub async fn run(concurrency: usize, bot: Arc<dyn TelegramBot>) {
-    bot.updates().for_each_concurrent(concurrency, |maybe_update| {
-        let bot = bot.clone();
-        async move {
-            match maybe_update {
-                Ok(update) =>  match bot.on_update(&update).await {
-                    Ok(_) => {}
-                    Err(err) => error!("error processing update: {:?}, err: {}", update, err)
+    bot.updates()
+        .for_each_concurrent(concurrency, |maybe_update| {
+            let bot = bot.clone();
+            async move {
+                match maybe_update {
+                    Ok(update) => match bot.on_update(&update).await {
+                        Ok(_) => {}
+                        Err(err) => error!("error processing update: {:?}, err: {}", update, err),
+                    },
+                    Err(err) => error!("error getting update: {}", err),
                 }
-                Err(err) => error!("error getting update: {}", err)
             }
-        }
-    }).await
+        })
+        .await
 }

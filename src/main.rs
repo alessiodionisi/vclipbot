@@ -10,9 +10,9 @@ use crate::bot::clip_bot::TelegramClipBot;
 use crate::bot::telegram_bot;
 use crate::dal::yarn_api::YarnApiImpl;
 use crate::dao::clip_dao::ClipDaoImpl;
+use log::info;
 use std::env;
 use std::sync::Arc;
-use log::{info};
 
 #[tokio::main]
 async fn main() {

@@ -1711,7 +1711,6 @@ dependencies = [
  "chrono",
  "fern",
  "futures",
- "futures-util",
  "log 0.4.11",
  "reqwest",
  "scraper",
