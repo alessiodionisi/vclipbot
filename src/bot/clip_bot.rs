@@ -1,7 +1,6 @@
 use crate::bot::telegram_bot::TelegramBot;
 use crate::dao::clip_dao::ClipDao;
 use async_trait::async_trait;
-use log::error;
 use std::error::Error;
 use std::sync::Arc;
 use telegram_bot::{

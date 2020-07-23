@@ -18,6 +18,7 @@ use log::{info};
 async fn main() {
     setup_logging();
 
+    info!("loading clip bot configs");
     let token = env::var("TELEGRAM_API_KEY").expect("TELEGRAM_API_KEY not found");
     let yarn_api = Arc::new(YarnApiImpl::new("https://getyarn.io".to_string()));
     let clip_dao = Arc::new(ClipDaoImpl::new(yarn_api));
