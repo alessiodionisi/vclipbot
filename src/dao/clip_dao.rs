@@ -18,14 +18,7 @@ pub struct ClipDaoImpl {
 impl ClipDao for ClipDaoImpl {
     async fn query(&self, query: &str) -> Result<Vec<Clip>, Box<dyn Error>> {
         let clips = self.yarn_api.query(query).await?;
-        Ok(clips
-            .iter()
-            .map(|clip| Clip {
-                id: clip.id.clone(),
-                title: clip.title.clone(),
-                caption: clip.caption.clone(),
-            })
-            .collect())
+        Ok(clips.iter().map(Clip::from).collect())
     }
 }
 

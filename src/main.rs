@@ -17,12 +17,10 @@ use std::sync::Arc;
 async fn main() {
     setup_logging();
 
+    let token = env::var("TELEGRAM_API_KEY").unwrap_or("TELEGRAM_API_KEY not found".to_string());
     let yarn_api = Arc::new(YarnApiImpl::new("https://getyarn.io".to_string()));
     let clip_dao = Arc::new(ClipDaoImpl::new(yarn_api));
-    let clip_bot = Arc::new(TelegramClipBot::new(
-        env::var("TELEGRAM_API_KEY").unwrap(),
-        clip_dao,
-    ));
+    let clip_bot = Arc::new(TelegramClipBot::new(token, clip_dao));
 
     telegram_bot::run(clip_bot).await;
 }

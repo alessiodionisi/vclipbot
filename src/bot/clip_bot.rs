@@ -21,17 +21,11 @@ impl TelegramBot for TelegramClipBot {
     }
 
     async fn on_update(&self, update: &Update) -> Result<(), Box<dyn Error>> {
-        if let Update {
-            kind: UpdateKind::InlineQuery(inline_query),
-            ..
-        } = update
-        {
-            match self.on_inline_query(inline_query.clone()).await {
-                Err(err) => error!("error: {:?}", err),
-                _ => {}
-            }
+        if let Update { kind: UpdateKind::InlineQuery(inline_query), .. } = update {
+            self.on_inline_query(inline_query.clone()).await
+        } else {
+            Ok(())
         }
-        Ok(())
     }
 
     async fn on_inline_query(&self, inline_query: InlineQuery) -> Result<(), Box<dyn Error>> {

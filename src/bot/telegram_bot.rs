@@ -4,6 +4,7 @@ use std::sync::Arc;
 use telegram_bot::{InlineQuery, Update, UpdatesStream};
 use futures::StreamExt;
 use log::{error};
+
 #[async_trait]
 pub trait TelegramBot: Send {
     fn updates(&self) -> UpdatesStream;
