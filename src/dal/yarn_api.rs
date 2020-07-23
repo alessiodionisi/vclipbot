@@ -6,16 +6,17 @@ use std::error::Error;
 struct Endpoints;
 
 impl Endpoints {
-    fn find(query: String) -> String {
+    fn query(query: &str) -> String {
         format!("yarn-find?text={}", query)
     }
 }
 
 #[async_trait]
 pub trait YarnApi: Sync + Send {
-    async fn find(&self, query: String) -> Result<Vec<ClipResponse>, Box<dyn Error>>;
+    async fn query(&self, query: &str) -> Result<Vec<ClipResponse>, Box<dyn Error>>;
 }
 
+#[derive(Clone)]
 pub struct YarnApiImpl {
     base_url: String,
 }
@@ -28,8 +29,8 @@ impl YarnApiImpl {
 
 #[async_trait]
 impl YarnApi for YarnApiImpl {
-    async fn find(&self, query: String) -> Result<Vec<ClipResponse>, Box<dyn Error>> {
-        let endpoint = format!("{}/{}", self.base_url, Endpoints::find(query));
+    async fn query(&self, query: &str) -> Result<Vec<ClipResponse>, Box<dyn Error>> {
+        let endpoint = format!("{}/{}", self.base_url, Endpoints::query(query));
         let response = reqwest::get(&endpoint).await?;
         let html = response.text().await?;
         let document = Html::parse_document(&html);

@@ -6,7 +6,7 @@ use std::sync::Arc;
 
 #[async_trait]
 pub trait ClipDao: Sync + Send {
-    async fn get_clips(&self, query: String) -> Result<Vec<Clip>, Box<dyn Error>>;
+    async fn query(&self, query: &str) -> Result<Vec<Clip>, Box<dyn Error>>;
 }
 
 #[derive(Clone)]
@@ -16,8 +16,8 @@ pub struct ClipDaoImpl {
 
 #[async_trait]
 impl ClipDao for ClipDaoImpl {
-    async fn get_clips(&self, query: String) -> Result<Vec<Clip>, Box<dyn Error>> {
-        let clips = self.yarn_api.find(query).await?;
+    async fn query(&self, query: &str) -> Result<Vec<Clip>, Box<dyn Error>> {
+        let clips = self.yarn_api.query(query).await?;
         Ok(clips
             .iter()
             .map(|clip| Clip {
