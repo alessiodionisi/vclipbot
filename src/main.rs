@@ -22,7 +22,7 @@ async fn main() {
     let clip_dao = Arc::new(ClipDaoImpl::new(yarn_api));
     let clip_bot = Arc::new(TelegramClipBot::new(token, clip_dao));
 
-    telegram_bot::run(clip_bot).await;
+    telegram_bot::run(100, clip_bot).await;
 }
 
 fn setup_logging() {

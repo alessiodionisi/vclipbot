@@ -12,8 +12,8 @@ pub trait TelegramBot: Send {
     async fn on_inline_query(&self, inline_query: InlineQuery) -> Result<(), Box<dyn Error>>;
 }
 
-pub async fn run(bot: Arc<dyn TelegramBot>) {
-    bot.updates().for_each_concurrent(100, |maybe_update| {
+pub async fn run(concurrency: usize, bot: Arc<dyn TelegramBot>) {
+    bot.updates().for_each_concurrent(concurrency, |maybe_update| {
         let bot = bot.clone();
         async move {
             match maybe_update {
