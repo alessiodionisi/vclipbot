@@ -20,7 +20,7 @@ impl TelegramBot for TelegramClipBot {
         self.api.stream()
     }
 
-    async fn on_update(&self, update: Update) -> Result<(), Box<dyn Error>> {
+    async fn on_update(&self, update: &Update) -> Result<(), Box<dyn Error>> {
         if let Update {
             kind: UpdateKind::InlineQuery(inline_query),
             ..
