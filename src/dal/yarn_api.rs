@@ -56,9 +56,11 @@ impl YarnApi for YarnApiImpl {
             let clip_text = second_link.text().collect::<String>();
 
             ret.push(ClipResponse {
-                id: clip_id,
+                id: clip_id.clone(),
                 title: clip_title,
                 caption: clip_text,
+                mp4_link: format!("https://y.yarn.co/{}_text.mp4", clip_id),
+                gif_link: format!("https://y.yarn.co/{}_text.gif", clip_id),
             })
         }
         Ok(ret)

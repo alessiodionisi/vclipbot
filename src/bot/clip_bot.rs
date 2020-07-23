@@ -35,11 +35,11 @@ impl TelegramBot for TelegramClipBot {
             let title_and_caption = format!("{} - {}", clip.caption.trim(), clip.title.trim());
             let query_result = InlineQueryResultMpeg4Gif {
                 id: clip.id.to_string(),
-                mpeg4_url: format!("https://y.yarn.co/{}_text.mp4", clip.id),
+                mpeg4_url: clip.mp4_link,
                 mpeg4_width: None,
                 mpeg4_height: None,
                 mpeg4_duration: None,
-                thumb_url: format!("https://y.yarn.co/{}_text.gif", clip.id),
+                thumb_url: clip.gif_link,
                 title: Some(title_and_caption.to_string()),
                 caption: Some(title_and_caption.to_string()),
                 parse_mode: Some(ParseMode::Markdown),
