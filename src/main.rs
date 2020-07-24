@@ -40,7 +40,7 @@ fn setup_logging() {
                 message
             ))
         })
-        .level(log::LevelFilter::Debug)
+        .level(log::LevelFilter::Info)
         .level_for("hyper", log::LevelFilter::Info)
         .chain(std::io::stdout())
         .apply()
