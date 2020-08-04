@@ -7,6 +7,7 @@ use telegram_bot::{
     Api, CanAnswerInlineQuery, InlineQuery, InlineQueryResult, InlineQueryResultMpeg4Gif,
     ParseMode, Update, UpdateKind, UpdatesStream,
 };
+use log::info;
 
 pub struct TelegramClipBot {
     api: Api,
@@ -33,6 +34,8 @@ impl TelegramBot for TelegramClipBot {
 
     async fn on_inline_query(&self, inline_query: InlineQuery) -> Result<(), Box<dyn Error>> {
         let clips = self.clip_dao.query(inline_query.query.as_str()).await?;
+        info!("loaded {:?} clips for query: {:?}", clips, inline_query.query.as_str());
+
         let mut query_results: Vec<InlineQueryResult> = Vec::new();
 
         for clip in clips {

@@ -1,5 +1,6 @@
 use crate::dal::response::clip_response::ClipResponse;
 
+#[derive(Debug, Clone)]
 pub struct Clip {
     pub id: String,
     pub title: String,

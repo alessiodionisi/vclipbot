@@ -1,5 +1,6 @@
 extern crate chrono;
 extern crate fern;
+extern crate actix_web;
 
 mod bot;
 mod dal;
@@ -25,7 +26,7 @@ async fn main() {
     let clip_bot = Arc::new(TelegramClipBot::new(token, clip_dao));
 
     info!("starting clip bot");
-    telegram_bot::run(100, clip_bot).await;
+    telegram_bot::run_webhook(8888, clip_bot).await;
 }
 
 fn setup_logging() {
@@ -40,7 +41,7 @@ fn setup_logging() {
                 message
             ))
         })
-        .level(log::LevelFilter::Debug)
+        .level(log::LevelFilter::Info)
         .level_for("hyper", log::LevelFilter::Info)
         .chain(std::io::stdout())
         .apply()
