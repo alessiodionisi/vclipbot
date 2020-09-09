@@ -1,0 +1,17 @@
+imagePullSecrets:
+  - name: docker-github-packages
+
+#keel:
+#  policy: all
+#  trigger: poll
+#  pollSchedule: "@every 2m"
+#  images:
+#    - repository: image.repository
+#      tag: image.tag
+
+keelLabels:
+  keel.sh/policy: all
+  keel.sh/trigger: poll
+
+keelAnnotations:
+  keel.sh/pollSchedule: "@every 2m"

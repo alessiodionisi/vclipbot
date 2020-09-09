@@ -1,7 +1,11 @@
 [package]
 name = "vclipbot"
-version = "0.1.0"
-authors = ["Alessio Dionisi <hello@adns.io>"]
+version = "1.1.0"
+authors = [
+    "Alessio Dionisi <hello@adns.io>",
+    "Gabriele Carrettoni <gabriele.carrettoni@gmail.com>",
+    "Pierluigi D'Andrea <mail@pierluigi.me>"
+]
 edition = "2018"
 
 [dependencies]
