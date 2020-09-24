@@ -4,9 +4,6 @@ metadata:
   name: {{ include "vclipbot.fullname" . }}
   labels:
     {{- include "vclipbot.labels" . | nindent 4 }}
-    {{- toYaml .Values.keelLabels | nindent 4 }}
-  annotations:
-    {{- toYaml .Values.keelAnnotations | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -34,9 +31,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-            - secretRef:
-                name: {{ include "vclipbot.fullname" . }}-env
+          env:
+            - name: TELEGRAM_API_KEY
+              value: {{ .Values.telegram.apiKey | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
