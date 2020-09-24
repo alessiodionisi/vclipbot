@@ -54,5 +54,4 @@ tolerations: []
 
 affinity: {}
 
-telegram:
-  apiKey: ""
+envSecret: ""
