@@ -1,5 +1,0 @@
-version: "3.8"
-services:
-  vclipbot:
-    image: docker.pkg.github.com/adnsio/vclipbot/vclipbot:1.0.1
-    env_file: .env
