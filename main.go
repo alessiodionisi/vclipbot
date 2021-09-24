@@ -3,17 +3,20 @@ package main
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"golang.org/x/net/html"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 func main() {
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+
 	b, err := tb.NewBot(tb.Settings{
 		Token: os.Getenv("VCLIPBOT_TELEGRAM_TOKEN"),
 		Poller: &tb.LongPoller{
@@ -21,7 +24,7 @@ func main() {
 		},
 	})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Msg(err.Error())
 	}
 
 	b.Handle(tb.OnText, func(m *tb.Message) {
@@ -34,32 +37,30 @@ func main() {
 			),
 			tb.ModeMarkdown,
 		); err != nil {
-			log.Printf("error: %s\n", err)
+			log.Error().Msg(err.Error())
 		}
 	})
 
 	b.Handle(tb.OnQuery, func(q *tb.Query) {
-		handleErr := func(err error) {
-			log.Printf("error: %s\n", err)
-			return
-		}
-
 		var resp *http.Response
 		if q.Text == "" {
 			resp, err = http.Get("https://getyarn.io/yarn-popular")
 			if err != nil {
-				handleErr(err)
+				log.Error().Msg(err.Error())
+				return
 			}
 		} else {
 			resp, err = http.Get(fmt.Sprintf("https://getyarn.io/yarn-find?text=%s", q.Text))
 			if err != nil {
-				handleErr(err)
+				log.Error().Msg(err.Error())
+				return
 			}
 		}
 
 		clips, err := parseClips(resp.Body)
 		if err != nil {
-			handleErr(err)
+			log.Error().Msg(err.Error())
+			return
 		}
 
 		if len(clips) > 50 {
@@ -82,7 +83,8 @@ func main() {
 			Results:   results,
 			CacheTime: 60,
 		}); err != nil {
-			handleErr(err)
+			log.Error().Msg(err.Error())
+			return
 		}
 	})
 
